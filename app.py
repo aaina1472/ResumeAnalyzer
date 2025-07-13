@@ -5,6 +5,7 @@ from nltk.corpus import stopwords
 import nltk
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import plotly.graph_objects as go  #For circular gauge
 
 # Handle stopwords safely
 try:
@@ -58,6 +59,24 @@ if st.button("🔍 Analyze"):
             # Progress Bar (acts like a wheel meter)
             st.progress(int(rounded_score))  # value between 0 to 100
             st.metric("🎯 Match Percentage", f"{rounded_score}%", delta=None)
+
+
+            # 🧭 Circular Gauge (Plotly)
+            fig = go.Figure(go.Indicator(
+                mode = "gauge+number",
+                value = rounded_score,
+                title = {'text': "Resume Match Gauge"},
+                gauge = {
+                    'axis': {'range': [0, 100]},
+                    'bar': {'color': "green"},
+                    'steps': [
+                        {'range': [0, 50], 'color': "red"},
+                        {'range': [50, 80], 'color': "yellow"},
+                        {'range': [80, 100], 'color': "lightgreen"},
+                    ],
+                }
+            ))
+            st.plotly_chart(fig)
 
             # 🔍 Missing Keywords
             resume_words = set(cleaned_resume.split())
