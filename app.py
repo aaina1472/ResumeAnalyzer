@@ -54,6 +54,9 @@ if st.button("🔍 Analyze"):
 
             # ✅ Match score output with a meter
             st.success(f"✅ Resume–JD Match Score: {rounded_score}%")
+
+            # Progress Bar (acts like a wheel meter)
+            st.progress(int(rounded_score))  # value between 0 to 100
             st.metric("🎯 Match Percentage", f"{rounded_score}%", delta=None)
 
             # 🔍 Missing Keywords
