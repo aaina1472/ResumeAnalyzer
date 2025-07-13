@@ -8,6 +8,14 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 nltk.download('stopwords')
 
+# Safe check: download only if missing
+try:
+    stop_words = set(stopwords.words('english'))
+except LookupError:
+    nltk.download('stopwords')
+    stop_words = set(stopwords.words('english'))
+
+
 # ---------- Text Cleaning ----------
 def clean_text(text):
     text = text.lower()
